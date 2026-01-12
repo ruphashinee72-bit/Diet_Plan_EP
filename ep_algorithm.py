@@ -46,3 +46,24 @@ class EP_Optimizer:
             history.append(self.fitness(pop[0]))
             
         return pop[0], history
+
+def run(self, generations=100, pop_size=50, mut_rate=0.3):
+        # Initial population: random row indices
+        pop = [[np.random.randint(0, len(self.df))] for _ in range(pop_size)]
+        history = []
+        
+        for g in range(generations):
+            offspring = []
+            for parent in pop:
+                child = parent.copy()
+                # Mutation uses the mut_rate from the slider
+                if np.random.rand() < mut_rate:
+                    child[0] = np.random.randint(0, len(self.df))
+                offspring.append(child)
+            
+            combined = pop + offspring
+            combined.sort(key=lambda x: self.fitness(x))
+            pop = combined[:pop_size]
+            history.append(self.fitness(pop[0]))
+            
+        return pop[0], history
